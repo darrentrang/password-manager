@@ -113,6 +113,10 @@ else if(command === 'print')
     console.log('printing all accounts...');
     printAllAccounts();
 }
+else
+{
+    console.log('you did not provide any commands dumbass');
+}
 
 
 
