@@ -1,0 +1,11 @@
+to run the app.js file do
+    npm start
+must have a package.json setup with
+    "scripts": {
+        "start": "node app.js"
+      },
+
+to run the app.js file with yargs you must do
+     npm start -- create -n Darren -u yoshemango -p password
+      or else you have to do
+     node app.js create -n Darren -u yoshemango -p password
