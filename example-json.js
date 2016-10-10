@@ -3,7 +3,7 @@ var person = {
     age: 23
 };
 
-var personJSON_string = JSON.stringify(person); //takes object or array
+var personJSON_string = JSON.stringify(person); //takes object or array and convert to string
 
 console.log(personJSON_string);
 console.log(typeof personJSON_string);
