@@ -9,8 +9,10 @@ var secretMessage = {
 var secretKey = "123abc";
 
 //encrypt
-var encryptedMessage = crypto.AES.encrypt(JSON.stringify(secretMessage), secretKey);    //convert object to string then encrypt
-console.log("encrypted message = " + encryptedMessage);
+var encryptedMessage = crypto.AES.encrypt(JSON.stringify(secretMessage), secretKey); //returns object   //convert object to string then encrypt
+console.log(encryptedMessage);
+console.log(typeof encryptedMessage);
+console.log("encrypted message = " + encryptedMessage); //since we do stirng concat it actually does encryptedMessage.toString()
 
 //decrypt
 var bytes = crypto.AES.decrypt(encryptedMessage, secretKey); //returns array of bytes
