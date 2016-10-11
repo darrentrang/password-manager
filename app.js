@@ -54,7 +54,16 @@ var argv = require('yargs')
                 }
             });
     })
-    .command('print', 'print all accounts', function(yargs){})
+    .command('print', 'print all accounts', function(yargs){
+        yargs.options({
+            masterPassword: {
+                demand: true,
+                alias: 'mp',
+                description: 'master password for decryption',
+                type: 'string'
+            }
+        });
+    })
     .help('help')
     .argv;
 
@@ -91,15 +100,26 @@ function getAccount (accountName, masterPassword){
 	//return matchedAccount;
 }
 
-function printAllAccounts()
+function printAllAccounts(masterPassword)
 {
-    var accounts = storage.getItemSync('accounts');
-    accounts.forEach(function(account){
-        console.log(account.name);
-        console.log(account.username);
-        console.log(account.password);
-        console.log(' ');
-    });
+    var encrypted_accounts = storage.getItemSync('accounts'); //returns encrypted string
+    if(typeof encrypted_accounts === 'undefined')
+    {
+        console.log("no accounts");
+    }
+    else
+    {
+        var decrypted_bytes = crypto.AES.decrypt(encrypted_accounts, masterPassword); //convert encrypted array to bytes
+        var decrypted_accounts_string = decrypted_bytes.toString(crypto.enc.Utf8); //string of decrypted accounts
+        var accounts = JSON.parse(decrypted_accounts_string); //convert accounts string to JSON accounts
+
+        accounts.forEach(function(account) {
+            console.log("name = " + account.name);
+            console.log("username = " + account.username);
+            console.log("password = " + account.password);
+            console.log(" ");
+        });
+    }
 }
 
 
@@ -133,7 +153,8 @@ function saveAccounts(accounts, masterPassword)
 var command = argv._[0];
 console.log('command = ' + command);
 console.log(argv);
-if(command === 'create' && typeof argv.name !== 'undefined' && typeof argv.username !== 'undefined' && typeof argv.password !== 'undefined' && typeof argv.masterPassword !== 'undefined')
+if(command === 'create' && typeof argv.name !== 'undefined' && typeof argv.username !== 'undefined' && typeof argv.password !== 'undefined' 
+    && typeof argv.masterPassword !== 'undefined')
 {
     console.log('creating an account... ' + argv.name + ' ' + argv.username + ' ' + argv.password);
     var account_to_create = {name: argv.name, username: argv.username, password: argv.password};
@@ -150,10 +171,10 @@ else if(command === 'get' && typeof argv.name !== 'undefined' && argv.masterPass
         console.log('password: ' + acc.password);
     }
 }
-else if(command === 'print')
+else if(command === 'print' && typeof argv.masterPassword !== 'undefined')
 {
     console.log('printing all accounts...');
-    printAllAccounts();
+    printAllAccounts(argv.masterPassword);
 }
 
 
