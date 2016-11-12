@@ -156,25 +156,49 @@ console.log(argv);
 if(command === 'create' && typeof argv.name !== 'undefined' && typeof argv.username !== 'undefined' && typeof argv.password !== 'undefined' 
     && typeof argv.masterPassword !== 'undefined')
 {
-    console.log('creating an account... ' + argv.name + ' ' + argv.username + ' ' + argv.password);
-    var account_to_create = {name: argv.name, username: argv.username, password: argv.password};
-    createAccount(account_to_create, argv.masterPassword);
+    try
+    {
+        console.log('creating an account... ' + argv.name + ' ' + argv.username + ' ' + argv.password);
+        var account_to_create = {name: argv.name, username: argv.username, password: argv.password};
+        createAccount(account_to_create, argv.masterPassword);
+    }
+    catch(e)
+    {
+        console.log("Unable to create account. Make sure you have all parameters.");
+        console.log(e.message);
+    }
 }
 else if(command === 'get' && typeof argv.name !== 'undefined' && argv.masterPassword !== 'undefined')
 {
-    console.log('getting an account... ' + argv.name);
-    var acc = getAccount(argv.name, argv.masterPassword);
-    if(typeof acc !== 'undefined')
+    try
     {
-        console.log('name: ' + acc.name);
-        console.log('username: ' + acc.username);
-        console.log('password: ' + acc.password);
+        console.log('getting an account... ' + argv.name);
+        var acc = getAccount(argv.name, argv.masterPassword);
+        if(typeof acc !== 'undefined')
+        {
+            console.log('name: ' + acc.name);
+            console.log('username: ' + acc.username);
+            console.log('password: ' + acc.password);
+        }
+    }
+    catch(e)
+    {
+        console.log("Unable to get account.");
+        console.log(e.message);
     }
 }
 else if(command === 'print' && typeof argv.masterPassword !== 'undefined')
 {
-    console.log('printing all accounts...');
-    printAllAccounts(argv.masterPassword);
+    try
+    {
+        console.log('printing all accounts...');
+        printAllAccounts(argv.masterPassword);
+    }
+    catch(e)
+    {
+        console.log("unable to print all accounts. make sure master password is correct");
+        console.log(e.message);
+    }
 }
 
 
