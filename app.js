@@ -7,6 +7,9 @@ var crypto = require('crypto-js');
 
 //to run this via command line and using npm must doe
 //     npm start -- create -n Darren -u yoshemango -p password
+//               -- get
+//               -- print
+//                 ....... --mp dm7 (expand that)
 //      or else you have to do
 //     node app.js create -n Darren -u yoshemango -p password
 var argv = require('yargs')

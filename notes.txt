@@ -9,3 +9,9 @@ to run the app.js file with yargs you must do
      npm start -- create -n Darren -u yoshemango -p password
       or else you have to do
      node app.js create -n Darren -u yoshemango -p password
+
+
+open terminal, navigate to folder, do a "npm init" and press enter through everything. this will create a package.json and you can modify that.
+now you can install modules with npm.
+example: npm install request@2.60.0 --save
+          the --save will save it into the package.json file
